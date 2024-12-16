@@ -28,7 +28,7 @@ jobs:
         run: npx playwright install --with-deps
 
       - name: Run tests jest
-        run: npm test:unit
+        run: npm run test:unit
 
       - name: Start server
         run: npm start &
@@ -41,10 +41,10 @@ jobs:
           echo "Server is ready"
 
       - name: Run tests playwright
-        run: npm test:e2e
+        run: npm run test:e2e
 
       - name: Generate Playwright report
-        run: npm test:e2e:report
+        run: npm run test:e2e:report
 
       - name: Upload Playwright report
         uses: actions/upload-artifact@v3
