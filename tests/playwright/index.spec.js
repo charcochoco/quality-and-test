@@ -82,7 +82,9 @@ test.describe('Test end to end Pendu', () => {
     
         await page.locator('#letterInput').fill('a');
         await page.locator('#testButton').click();
-    
+
+        await page.waitForTimeout(1500);
+        
         const updatedScore = await page.evaluate(() => parseInt(localStorage.getItem('score'), 10));
         expect(updatedScore).toBeLessThan(initialScore);
     });
