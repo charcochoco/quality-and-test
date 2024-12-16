@@ -3,9 +3,9 @@ concurrency: production
 
 on:
   push:
-    branches: [ main ]
+    branches: [ playwright ]
   pull_request:
-    branches: [ main ]
+    branches: [ playwright ]
 
 jobs:
   build:
@@ -24,8 +24,33 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Run tests
-        run: npm test
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps
+
+      - name: Run tests jest
+        run: npm test:unit
+
+      - name: Start server
+        run: npm start &
+        env:
+          PORT: 3030  
+
+      - name: Wait for server to be ready
+        run: |
+          npx wait-on http://localhost:3030
+          echo "Server is ready"
+
+      - name: Run tests playwright
+        run: npm test:e2e
+
+      - name: Generate Playwright report
+        run: npm test:e2e:report
+
+      - name: Upload Playwright report
+        uses: actions/upload-artifact@v3
+        with:
+          name: playwright-report
+          path: playwright-report/
 
       - name: Display test results
         if: failure() # This step runs only if the tests fail

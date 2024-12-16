@@ -36,17 +36,17 @@ document.addEventListener('DOMContentLoaded', async function() {
     if (localStorage.getItem('isWin') == "false" && localStorage.getItem('numberOfTries') > 0){
         showOrHideSection(false, true);
 
-        document.getElementById('numberOfTries').innerText = "Nombre d'essai restant : " + localStorage.getItem('numberOfTries');
+        document.getElementById('numberOfTries').innerText = localStorage.getItem('numberOfTries');
         if (localStorage.getItem('unknowWord') === null){
             fetch('/unknowWord')
                 .then(response => response.json())
                 .then(data => {
                     localStorage.setItem('unknowWord', data.game);
-                    document.getElementById('word').innerText = "Votre mot : " + data.game;
+                    document.getElementById('word').innerText = data.game;
                 });
         }
         else{
-            document.getElementById('word').innerText = "Votre mot : " + localStorage.getItem('unknowWord');
+            document.getElementById('word').innerText = localStorage.getItem('unknowWord');
         }
     }
     else{
@@ -102,7 +102,7 @@ document.getElementById('testButton').addEventListener('click', function() {
 
                 if(data.correct){
                     localStorage.setItem('unknowWord', data.newUnknowWord);
-                    document.getElementById('word').innerText = "Votre mot : " + data.newUnknowWord;
+                    document.getElementById('word').innerText = data.newUnknowWord;
 
                     if(localStorage.getItem('unknowWord') == data.word){
                         document.getElementById('letterInput').disabled = true;
@@ -130,7 +130,7 @@ document.getElementById('testButton').addEventListener('click', function() {
 
                     localStorage.setItem('numberOfTries', currentNumberOfTries);
 
-                    document.getElementById('numberOfTries').innerText = "Nombre d'essai restant : " + currentNumberOfTries;
+                    document.getElementById('numberOfTries').innerText = currentNumberOfTries;
                 }
             } else {
                 alert(data.error);
