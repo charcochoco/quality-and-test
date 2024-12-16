@@ -31,14 +31,17 @@ jobs:
         run: npm run test:unit
 
       - name: Start server
-        run: npm start &
+        run: |
+          nohup npm start &
+          sleep 10 
         env:
           PORT: 3030  
 
       - name: Wait for server to be ready
         run: |
-          npx wait-on http://localhost:3030
-          echo "Server is ready"
+          for i in {1..10}; do
+            curl --fail http://localhost:3030 || sleep 3
+          done
 
       - name: Run tests playwright
         run: npm run test:e2e
