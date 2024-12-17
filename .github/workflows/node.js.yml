@@ -24,8 +24,14 @@ jobs:
       - name: Install dependencies
         run: npm ci
       
-      # - name: 🔴 Delete remote badges branch
-      #   run: git push origin --delete badges
+      - name: Set up Git authentication
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git remote set-url origin https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/${{ github.repository }}
+            
+      - name: 🔴 Delete remote badges branch
+        run: git push origin --delete badges
 
       - name: ➕ Create badges branch
         run: git checkout -b badges
