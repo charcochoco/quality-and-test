@@ -30,11 +30,16 @@ jobs:
       - name: Run tests jest with Coverage
         run: npm run test:unit -- --coverage
       
-      - name: Generate Coverage Badges
-        uses: jpb06/coverage-badges-action@v1
+      - name: ⚙️ Generating coverage badges
+        uses: jpb06/coverage-badges-action@latest
         with:
-          coverage-summary-path: coverage/coverage-summary.json
-          output-path: coverage/badges
+          branches: playwright  # Générer des badges uniquement pour la branche 'playwright'
+          target-branch: badges  # Pousser les badges vers la branche 'badges'
+          coverage-summary-path: ./coverage/coverage-summary.json  # Spécifier le chemin du fichier de résumé de couverture
+          badges-icon: vitest  # Icône des badges
+          commit-message: "Update coverage badges"  # Message de commit pour les badges
+          commit-user: "github-actions[bot]"  # Nom de l'utilisateur pour le commit
+          commit-user-email: "github-actions[bot]@users.noreply.github.com"  # Email de l'utilisateur pour le commit
 
       - name: Commit Coverage Badges
         run: |
@@ -45,7 +50,7 @@ jobs:
             echo "No new badge changes"
           else
             git commit -m "Update coverage badges"
-            git push origin playwright
+            git push origin badges  # Pousser les badges dans la branche 'badges'
           fi
 
       - name: Start server
