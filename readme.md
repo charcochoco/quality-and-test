@@ -1,5 +1,10 @@
 # Projet de Jeu du Pendu - Documentation
 
+![Statements](coverage/badges/badge-statements.svg)
+![Branches](coverage/badges/badge-branches.svg)
+![Functions](coverage/badges/badge-functions.svg)
+![Lines](coverage/badges/badge-lines.svg)
+
 Bienvenue dans le projet de **jeu du pendu** ! 
 Ce projet est une implémentation moderne du classique jeu du pendu. Le but est de deviner un mot en proposant des lettres, tout en évitant d'épuiser toutes vos tentatives. Le projet est développé avec une interface utilisateur dynamique et des tests automatisés pour garantir sa fiabilité.
 

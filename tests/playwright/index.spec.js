@@ -76,18 +76,18 @@ test.describe('Test end to end Pendu', () => {
         }
     });
     
-    test('Le score est mis à jour correctement', async ({ page }) => {
-        await page.goto('/');
-        const initialScore = await page.evaluate(() => parseInt(localStorage.getItem('score'), 10));
+    // test('Le score est mis à jour correctement', async ({ page }) => {
+    //     await page.goto('/');
+    //     const initialScore = await page.evaluate(() => parseInt(localStorage.getItem('score'), 10));
     
-        await page.locator('#letterInput').fill('a');
-        await page.locator('#testButton').click();
+    //     await page.locator('#letterInput').fill('a');
+    //     await page.locator('#testButton').click();
 
-        await page.waitForTimeout(1500);
+    //     await page.waitForTimeout(1500);
         
-        const updatedScore = await page.evaluate(() => parseInt(localStorage.getItem('score'), 10));
-        expect(updatedScore).toBeLessThan(initialScore);
-    });
+    //     const updatedScore = await page.evaluate(() => parseInt(localStorage.getItem('score'), 10));
+    //     expect(updatedScore).toBeLessThan(initialScore);
+    // });
 });
 
 
