@@ -13,45 +13,38 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: '22'
           cache: 'npm' # Cache npm dependencies
 
       - name: Install dependencies
         run: npm ci
+      
+      - name: 🔴 Delete remote badges branch
+        run: git push origin --delete badges
+
+      - name: ➕ Create badges branch
+        run: git checkout -b badges
 
       - name: Install Playwright browsers
         run: npx playwright install --with-deps
 
       - name: Run tests jest with Coverage
-        run: npm run test:unit -- --coverage
+        run: npm run test:unit
       
       - name: ⚙️ Generating coverage badges
         uses: jpb06/coverage-badges-action@latest
         with:
-          branches: playwright  # Générer des badges uniquement pour la branche 'playwright'
-          target-branch: badges  # Pousser les badges vers la branche 'badges'
-          coverage-summary-path: ./coverage/coverage-summary.json  # Spécifier le chemin du fichier de résumé de couverture
-          badges-icon: vitest  # Icône des badges
-          commit-message: "Update coverage badges"  # Message de commit pour les badges
-          commit-user: "github-actions[bot]"  # Nom de l'utilisateur pour le commit
-          commit-user-email: "github-actions[bot]@users.noreply.github.com"  # Email de l'utilisateur pour le commit
+          branches: playwright
+          target-branch: badges
+          coverage-summary-path: ./coverage/coverage-summary.json 
 
-      - name: Commit Coverage Badges
-        run: |
-          git config --local user.name "github-actions[bot]"
-          git config --local user.email "github-actions[bot]@users.noreply.github.com"
-          git add coverage/badges/*
-          if git diff --cached --quiet -- coverage/badges/*; then
-            echo "No new badge changes"
-          else
-            git commit -m "Update coverage badges"
-            git push origin badges  # Pousser les badges dans la branche 'badges'
-          fi
+      - name: ⬆️ Push badges branch
+        run: git push origin badges
 
       - name: Start server
         run: |
