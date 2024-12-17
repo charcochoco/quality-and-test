@@ -196,7 +196,7 @@ document.getElementById('submitNameButton').addEventListener('click', function()
         })
     })
     .then(response => response.json())
-    .then(data => {
+    .then(() => {
         getTabScore();
     });
 
