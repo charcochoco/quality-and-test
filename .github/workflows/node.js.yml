@@ -10,8 +10,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write  
 
     steps:
       - name: Checkout code
@@ -26,8 +24,8 @@ jobs:
       - name: Install dependencies
         run: npm ci
       
-      - name: 🔴 Delete remote badges branch
-        run: git push origin --delete badges
+      # - name: 🔴 Delete remote badges branch
+      #   run: git push origin --delete badges
 
       - name: ➕ Create badges branch
         run: git checkout -b badges
